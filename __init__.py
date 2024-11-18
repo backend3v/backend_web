@@ -7,7 +7,7 @@ _port = os.environ.get('PORT', 5000)
 
 @app.route('/')
 def index():
-    data = {"a":"1234"}
+    data = {"a":"12345678"}
     response = app.response_class(
         response=json.dumps(data),
         status=200,
