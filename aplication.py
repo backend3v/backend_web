@@ -10,7 +10,7 @@ class Aplication:
     def __init__(self):
         self.app = Flask(__name__)
         CORS(self.app)
-        self._port = os.environ.get('PORT', $PORT)
+        self._port = os.environ.get('PORT', 3000)
 
     def run(self):
         self.routes()
