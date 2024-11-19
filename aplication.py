@@ -14,7 +14,7 @@ class Aplication:
 
     def run(self):
         self.routes()
-        self.app.run(host='::', port=self._port)
+        self.app.run(host='0.0.0.0', port=self._port)
 
     def getResponse(self,data,error=False):
         statusCode=200
@@ -33,7 +33,7 @@ class Aplication:
     def routes(self):
         @self.app.route('/')
         def index():
-            data = {"a":"1234567897865476"}
+            data = json.dumps({"a":"1234567897865476"})
             return self.getResponse(data)
 
         @self.app.route('/prompt', methods=['POST'])
