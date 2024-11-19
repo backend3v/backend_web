@@ -35,7 +35,7 @@ class BitoService:
         news:arreglo clave valor json con la siguiente estructura por cada item generado en la pregunta noticias: path:enlace de la fuente donde encontraste el item de la noticia,valor:texto completo de la noticia generada en la pregunta noticias
         comparative_description:texto de la descripcion generada en la pregunta descripcionComparativa
         colors:un arreglo con 3 colores que tengan referencia al tema de {prompt_text}, que sean brillantes o contrasten bien con un fondo oscuro
-        phrase:una frase representativa, segundo nombre con el que se conoce,slogan, subtitulo, nickname ,apodo o algun dicho o frase popular que represente a {prompt_text}
+        phrase:una frase representativa de {prompt_text}, segundo nombre con el que se conoce a {prompt_text},slogan de {prompt_text},apodo de {prompt_text} o algun dicho popular sobre {prompt_text} o frase popular que represente a {prompt_text} si no la encuentras una frase famosa que tenga referencia al tema de {prompt_text}, selecciona la que mas represente historicamente, que se adapte mas a lo que puede signicar {prompt_text} o que se relacione mas con {prompt_text}
         generame la salida solo con el json, sin ningun tipo de contexto o informacion adicional y la salida debe estar traducida al idioma {self.languajes[self.outputLang]},excepto las claves del json deben estar en ingles tal cual esta en la pregunta y en minusculas
         """
     def setConsult(self,prompt_text):
