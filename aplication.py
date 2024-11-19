@@ -21,7 +21,7 @@ class Aplication:
         if error:
             statusCode=500
         response = self.app.response_class(
-                response=data,
+                response=json.dumps(data),
                 status=statusCode,
                 mimetype='application/json'
             )
@@ -33,7 +33,7 @@ class Aplication:
     def routes(self):
         @self.app.route('/')
         def index():
-            data = json.dumps({"a":"1234567897865476"})
+            data = {"a":"1234567897865476"}
             return self.getResponse(data)
 
         @self.app.route('/prompt', methods=['POST'])
