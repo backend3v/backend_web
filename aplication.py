@@ -14,7 +14,7 @@ class Aplication:
 
     def run(self):
         self.routes()
-        self.app.run(host='0.0.0.0', port=self._port)
+        self.app.run(host='::', port=self._port)
 
     def getResponse(self,data,error=False):
         statusCode=200
