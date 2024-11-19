@@ -26,15 +26,15 @@ class BitoService:
         imagen:Traeme una imagen acerca de {prompt_text}, si se trata de una organizacion, empresa, institucion o algo que sea representado con un logo, escudo, simbolo o algo similar; si no se trata de ese caso, puedes darme el enlace de una imagen que represente o parezca a {prompt_text} o algun tema o topico mas general o padre de este tema que si se pueda representar, si no encuentras o no puedes darme el enlace de una imagen, este valor sera nulo
         descripcionComparativa: Traeme una descripcion acerca de la comparativa, que contenga temas relevantes o sucesos que describan las variaciones en los valores comparables de la pregunta comparativa
         Generame un archivo json con la siguiente informacion:
-        tema:{prompt_text}
+        topic:{prompt_text}
         resumen:Traeme el resumen de una descripcion breve de {prompt_text}
-        comparativa:texto del csv gererado en la pregunta comparativa en formato de arreglo en vez de separadas las rows por \n cada row sera un arreglo de items de columnas  y el arreglo total sera un arreglo (todo el csv) que contendra arreglos (cada row) que contendran items (cada columna), la primera 
+        comparative:texto del csv gererado en la pregunta comparativa en formato de arreglo en vez de separadas las rows por \n cada row sera un arreglo de items de columnas  y el arreglo total sera un arreglo (todo el csv) que contendra arreglos (cada row) que contendran items (cada columna), la primera 
         columna debe ser la variable que se va a usar para generar el grafico comparativo, las siguientes columnas deben ser los valores comparables
-        variableComparativa:el nombre de la variable que se va a usar para generar el grafico comparativo
-        imagen:url de la imagen generada en la pregunta imagen
-        noticias:arreglo clave valor json con la siguiente estructura por cada item generado en la pregunta noticias: path:enlace de la noticia,valor:texto de la noticia
-        descripcionComparativa:texto de la descripcion generada en la pregunta descripcionComparativa
-        generame la salida solo con el json, sin ningun tipo de contexto o informacion adicional y la salida debe estar traducida al idioma {self.languajes[self.outputLang]}
+        variacompaative_variable:bleComparativa:el nombre de la variable que se va a usar para generar el grafico comparativo
+        image:url de la imagen generada en la pregunta imagen
+        news:arreglo clave valor json con la siguiente estructura por cada item generado en la pregunta noticias: path:enlace de la noticia,valor:texto de la noticia
+        compaative_description:texto de la descripcion generada en la pregunta descripcionComparativa
+        generame la salida solo con el json, sin ningun tipo de contexto o informacion adicional y la salida debe estar traducida al idioma {self.languajes[self.outputLang]},excepto las claves del json deben estar en ingles tal cual esta en la pregunta y en minusculas
         """
     def setConsult(self,prompt_text):
         prompt_text = self.getPrompt(prompt_text)
