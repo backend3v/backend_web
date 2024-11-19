@@ -33,7 +33,8 @@ class BitoService:
         variacompaative_variable:bleComparativa:el nombre de la variable que se va a usar para generar el grafico comparativo
         image:url de la imagen generada en la pregunta imagen
         news:arreglo clave valor json con la siguiente estructura por cada item generado en la pregunta noticias: path:enlace de la fuente donde encontraste el item de la noticia,valor:texto completo de la noticia generada en la pregunta noticias
-        compaative_description:texto de la descripcion generada en la pregunta descripcionComparativa
+        comparative_description:texto de la descripcion generada en la pregunta descripcionComparativa
+        colors:un arreglo con 3 colores que tengan referencia al tema de {prompt_text}, que sean brillantes o contrasten bien con un fondo oscuro
         generame la salida solo con el json, sin ningun tipo de contexto o informacion adicional y la salida debe estar traducida al idioma {self.languajes[self.outputLang]},excepto las claves del json deben estar en ingles tal cual esta en la pregunta y en minusculas
         """
     def setConsult(self,prompt_text):
