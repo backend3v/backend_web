@@ -23,7 +23,7 @@ RUN sudo /app/install.sh
 
 RUN apt-get clean
 RUN bito -v
-RUN echo "bito:\n    access_key: eyJhbGciOiJIUzI1NiJ9.eyJkYXRhIjoidjFfODE5M18xMTU5NjQwXzY5MTA2NV9Nb24gTm92IDE4IDE2OjIwOjUyIFVUQyAyMDI0In0.xqcc7u4LwWBth73uc68G4hHHqV_kzV_kwuuYZpyho4E\n    email: edward1577@gmail.com\n    preferred_ai_model: BASIC\nsettings:\n    auto_update: true\n    max_context_entries: 20"\ > ~/.bitoai/etc/bito-cli.yaml
+RUN echo "bito:\n    access_key: eyJhbGciOiJIUzI1NiJ9.eyJkYXRhIjoidjFfODE5NV8xMjYyODA2Xzc0MDYzM19Nb24gTm92IDE4IDIyOjUyOjAwIFVUQyAyMDI0In0.AMf6d2e3Ds3po4uDWLQz4Ir8bwnmfVXcrKYOR9nwtb4\n    email: backendev.py@gmail.com\n    preferred_ai_model: BASIC\nsettings:\n    auto_update: true\n    max_context_entries: 20"\ > ~/.bitoai/etc/bito-cli.yaml
 RUN cat ~/.bitoai/etc/bito-cli.yaml
 RUN bito config -l
 RUN cd ~/.bitoai/etc
