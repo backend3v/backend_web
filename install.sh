@@ -7,7 +7,7 @@ UNMACARCH=`uname -m`
 INSTALL_ARCH=""
 INSTALL_OS=""
 
-CLI_VERSION="4.9"
+CLI_VERSION="5.3"
 BITO_FILE="bito"
 LCA_BUNDLE="bito-lca"
 LCA_BUNDLE_EXTENSION="tar.gz"
@@ -67,36 +67,56 @@ BITO_URL=$DOWNLOAD_URL
 LCA_BUNDLE_URL=$DOWNLOAD_LCA_URL
 SLASH_COMMANDS_FILE_URL=$DOWNLOAD_SUPPORTED_FILES 
 
+echo "[DEBUG] Descargando binario principal desde: $BITO_URL"
 # Remove older residue files if exists at this location
 sudo rm -rf /tmp/$BITO_FILE
 # Download the bito binary from the URL
 curl -fS -L $BITO_URL -o /tmp/$BITO_FILE
 if [ $? -ne 0 ]; then
-    echo "Downloading Bito CLI failed, please contact support@bito.ai"
+    echo "[ERROR] Downloading Bito CLI failed, please contact support@bito.ai"
     exit 1
+else
+    echo "[DEBUG] Descarga de binario principal exitosa: /tmp/$BITO_FILE"
 fi
 
 
+echo "[DEBUG] Descargando LCA bundle desde: $LCA_BUNDLE_URL"
 # Remove older residue files if exists at this location
 sudo rm -rf /tmp/$LCA_BUNDLE.$LCA_BUNDLE_EXTENSION
 sudo rm -rf /tmp/$LCA_BUNDLE
 # Download the lca bundle binary from the URL
 curl -fS -L $LCA_BUNDLE_URL -o /tmp/$LCA_BUNDLE.$LCA_BUNDLE_EXTENSION
 if [ $? -ne 0 ]; then
-    echo "Downloading LCA bundle failed, please contact support@bito.ai"
+    echo "[ERROR] Downloading LCA bundle failed, please contact support@bito.ai"
     exit 1
+else
+    echo "[DEBUG] Descarga de LCA bundle exitosa: /tmp/$LCA_BUNDLE.$LCA_BUNDLE_EXTENSION"
 fi
+echo "[DEBUG] Extrayendo LCA bundle..."
 tar -xzvf /tmp/$LCA_BUNDLE.$LCA_BUNDLE_EXTENSION
+if [ $? -ne 0 ]; then
+    echo "[ERROR] Extracción de LCA bundle fallida"
+    exit 1
+else
+    echo "[DEBUG] Extracción de LCA bundle exitosa"
+fi
 mv $LCA_BUNDLE-$INSTALL_OS /tmp/$LCA_BUNDLE 
+if [ $? -ne 0 ]; then
+    echo "[ERROR] Movimiento de LCA bundle fallido"
+    exit 1
+else
+    echo "[DEBUG] Movimiento de LCA bundle exitoso: /tmp/$LCA_BUNDLE"
+fi
 
 
+echo "[DEBUG] Descargando archivo de comandos soportados desde: $SLASH_COMMANDS_FILE_URL"
 # Download the supported files from the URL
 curl -fS -L $SLASH_COMMANDS_FILE_URL -o /tmp/$SUPPORTEDFILE
 if [ $? -ne 0 ]; then
-    echo "Downloading supporting files failed, please contact support@bito.ai"
+    echo "[ERROR] Downloading supporting files failed, please contact support@bito.ai"
     exit 1
 else
-    echo "Downloading supporting files was successful"
+    echo "[DEBUG] Descarga de supporting files exitosa: /tmp/$SUPPORTEDFILE"
 fi
 # Remove existing file named "bin" in /usr/local directory which was getting created because of earlier versions of Bito CLI.
 if [ -f $USR_LOCAL_BIN_PATH ]; then
