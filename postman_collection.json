@@ -1,0 +1,63 @@
+{
+  "info": {
+    "_postman_id": "b1e2c3d4-5678-1234-9abc-def012345678",
+    "name": "Backend API Collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Root Endpoint",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": [""]
+        }
+      }
+    },
+    {
+      "name": "Prompt Endpoint",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"prompt\": \"¿Quién es el presidente de Argentina?\",\n  \"lang\": \"es\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/prompt",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["prompt"]
+        }
+      }
+    },
+    {
+      "name": "Send Email Endpoint",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"to\": \"destinatario@ejemplo.com\",\n  \"subject\": \"Prueba de correo\",\n  \"message\": \"Este es un mensaje de prueba enviado desde Postman.\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/send-email",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["send-email"]
+        }
+      }
+    }
+  ]
+} 

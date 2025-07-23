@@ -3,7 +3,8 @@ from flask import render_template
 import os,json,subprocess
 from services.bitoService import BitoService
 from flask_cors import CORS,cross_origin
-
+from dotenv import load_dotenv
+load_dotenv()
 
 
 class Aplication:
@@ -55,3 +56,42 @@ class Aplication:
                 return self.getResponse(result)
             except subprocess.CalledProcessError as e:
                 return self.getResponse(data={"error": str(e), "output": e.output},error=True)
+
+        @self.app.route('/send-email', methods=['POST'])
+        def send_email():
+            import smtplib
+            from email.mime.text import MIMEText
+            from email.mime.multipart import MIMEMultipart
+
+            data = request.json
+            to_email = data.get('to')
+            subject = data.get('subject')
+            message = data.get('message')
+
+            if not to_email or not subject or not message:
+                return self.getResponse({"error": "Missing 'to', 'subject' or 'message' in request."}, error=True)
+
+            # Configuración del servidor SMTP (modifica según tu proveedor)
+            smtp_server = os.environ.get('SMTP_SERVER', 'smtp.gmail.com')
+            smtp_port = int(os.environ.get('SMTP_PORT', 587))
+            smtp_user = os.environ.get('SMTP_USER')
+            smtp_password = os.environ.get('SMTP_PASSWORD')
+
+            if not smtp_user or not smtp_password:
+                return self.getResponse({"error": "SMTP credentials not set in environment variables."}, error=True)
+
+            try:
+                msg = MIMEMultipart()
+                msg['From'] = smtp_user
+                msg['To'] = to_email
+                msg['Subject'] = subject
+                msg.attach(MIMEText(message, 'plain'))
+
+                server = smtplib.SMTP(smtp_server, smtp_port)
+                server.starttls()
+                server.login(smtp_user, smtp_password)
+                server.sendmail(smtp_user, to_email, msg.as_string())
+                server.quit()
+                return self.getResponse({"success": True, "message": "Email sent successfully."})
+            except Exception as e:
+                return self.getResponse({"error": str(e)}, error=True)

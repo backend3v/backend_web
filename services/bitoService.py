@@ -41,7 +41,7 @@ class BitoService:
         """
     def setConsult(self,prompt_text):
         prompt_text = self.getPrompt(prompt_text)
-        prompt_text = self.translate(prompt_text)
+        #prompt_text = self.translate(prompt_text)
         ps = subprocess.Popen(('echo', prompt_text), stdout=subprocess.PIPE)
         output = subprocess.check_output(('bito'), stdin=ps.stdout)
         ps.wait()
