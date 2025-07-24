@@ -1,26 +1,12 @@
 {
   "info": {
-    "_postman_id": "b1e2c3d4-5678-1234-9abc-def012345678",
-    "name": "Backend API Collection",
+    "_postman_id": "prompt-api-collection-2024",
+    "name": "Prompt API Collection",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
     {
-      "name": "Root Endpoint",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:8000/",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "8000",
-          "path": [""]
-        }
-      }
-    },
-    {
-      "name": "Prompt Endpoint",
+      "name": "Prompt (cache + scraping)",
       "request": {
         "method": "POST",
         "header": [
@@ -28,7 +14,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"prompt\": \"¿Quién es el presidente de Argentina?\",\n  \"lang\": \"es\"\n}"
+          "raw": "{\n  \"prompt\": \"Energía solar\",\n  \"lang\": \"es\"\n}"
         },
         "url": {
           "raw": "http://localhost:8000/prompt",
@@ -36,11 +22,12 @@
           "host": ["localhost"],
           "port": "8000",
           "path": ["prompt"]
-        }
+        },
+        "description": "Consulta principal: cachea la respuesta de BitoService y siempre ejecuta scraping en tiempo real."
       }
     },
     {
-      "name": "Send Email Endpoint",
+      "name": "Test Prompt (fake Bito)",
       "request": {
         "method": "POST",
         "header": [
@@ -48,7 +35,56 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"to\": \"destinatario@ejemplo.com\",\n  \"subject\": \"Prueba de correo\",\n  \"message\": \"Este es un mensaje de prueba enviado desde Postman.\"\n}"
+          "raw": "{\n  \"prompt\": \"Energía solar\",\n  \"lang\": \"es\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/test_prompt",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["test_prompt"]
+        },
+        "description": "Consulta de prueba: usa ejemplo de respuesta de BitoService y scraping real."
+      }
+    },
+    {
+      "name": "Prompt History",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8000/prompt-history",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["prompt-history"]
+        },
+        "description": "Devuelve el historial de prompts cacheados (prompt normalizado, idioma, fecha, topic)."
+      }
+    },
+    {
+      "name": "Metrics",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8000/metrics",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["metrics"]
+        },
+        "description": "Devuelve las últimas 100 visitas registradas (IP, user agent, SO, navegador, idioma, referrer, ruta, móvil/bot, timestamp)."
+      }
+    },
+    {
+      "name": "Send Email",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"to\": \"destinatario@correo.com\",\n  \"subject\": \"Asunto de prueba\",\n  \"message\": \"Este es un mensaje de prueba.\"\n}"
         },
         "url": {
           "raw": "http://localhost:8000/send-email",
@@ -56,8 +92,10 @@
           "host": ["localhost"],
           "port": "8000",
           "path": ["send-email"]
-        }
+        },
+        "description": "Envía un email usando los parámetros dados. SMTP debe estar configurado en variables de entorno."
       }
     }
   ]
+} 
 } 

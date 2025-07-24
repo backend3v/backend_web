@@ -9,6 +9,7 @@ COPY requirements.txt .
 
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
+RUN python -m spacy download es_core_news_sm
 
 # Install Bito CLI
 
