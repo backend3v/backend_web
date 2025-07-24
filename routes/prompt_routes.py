@@ -24,8 +24,10 @@ def register_prompt_routes(app, getResponse):
             normalized_prompt = normalize_prompt(prompt_text)
             cached = get_cached_prompt(normalized_prompt, lang)
             if cached:
+                print("cached result")
                 bito_result = cached
             else:
+                print("no cached result")
                 bito_result = BS.setConsult(normalized_prompt)
                 save_prompt_cache(normalized_prompt, lang, bito_result)
             with concurrent.futures.ThreadPoolExecutor() as executor:
