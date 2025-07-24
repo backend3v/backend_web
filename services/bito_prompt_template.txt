@@ -1,3 +1,12 @@
+noticias: Trae las 3 noticias más importantes y actuales (de la última semana) sobre {{ prompt_text }}. 
+Cada noticia debe tener: título, fuente, fecha de publicación y enlace directo a la noticia. 
+Usa solo las siguientes fuentes confiables:
+{% for src in sources %}- {{ src }}
+{% endfor %}
+Evita fake news.
+
+imagen: Trae un enlace directo a una imagen relevante sobre {{ prompt_text }} (puede ser logo, foto, gráfico, etc). Si no hay imagen, deja el valor en null.
+
 comparative: Genera datos numéricos comparativos para un gráfico de líneas sobre {{ prompt_text }}.
 - Usa series que tengan sentido temporal, regional o de categorías relevantes para el tema.
 - El gráfico debe tener al menos 4 columnas: la primera columna es la variable independiente (por ejemplo, año, región, categoría), las siguientes son series numéricas a comparar.
@@ -19,6 +28,8 @@ descripcionComparativa: Explica brevemente las tendencias o hechos relevantes qu
 Genera un JSON con la siguiente información:
 topic: {{ prompt_text }}
 resumen: Breve resumen sobre {{ prompt_text }}
+news: arreglo de noticias generadas en la pregunta noticias, cada una con título, fuente, fecha y enlace
+image: enlace generado en la pregunta imagen
 comparative: el arreglo de arreglos generado en la pregunta comparative
 comparative_variable: el nombre de la variable independiente (primera columna)
 comparative_description: la explicación generada en descripcionComparativa

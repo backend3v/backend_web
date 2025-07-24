@@ -6,21 +6,8 @@ services:
       - "8000:8000"
     environment:
       - PORT=8000
-    depends_on:
-      - mongo
     networks:
       - backendnet
-  mongo:
-    image: mongo:6.0
-    restart: always
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongo_data:/data/db
-    networks:
-      - backendnet
-volumes:
-  mongo_data:
 networks:
   backendnet:
     driver: bridge

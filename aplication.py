@@ -5,10 +5,16 @@ from services.bitoService import BitoService
 from flask_cors import CORS,cross_origin
 from dotenv import load_dotenv
 load_dotenv()
-from services.scraperService import ScraperService
 import concurrent.futures
 from routes.prompt_routes import register_prompt_routes
 from routes.email_routes import register_email_routes
+import logging
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='[%(levelname)s] %(asctime)s %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
 
 
 class Aplication:

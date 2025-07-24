@@ -21,13 +21,23 @@ class BitoService:
     def getConfigList(self):
         result = subprocess.run([ 'bito','config','-e'], capture_output=True, text=True, check=True)
         return result
+    def get_sources(self):
+        import os, json
+        sources_path = os.path.join(os.path.dirname(__file__), 'sources.json')
+        try:
+            with open(sources_path, 'r', encoding='utf-8') as f:
+                sources = json.load(f)
+            return sources
+        except Exception:
+            return []
     def getPrompt(self,prompt_text):
         # Leer el template desde archivo y renderizar con Jinja2
         template_path = os.path.join(os.path.dirname(__file__), 'bito_prompt_template.txt')
         with open(template_path, 'r', encoding='utf-8') as f:
             template_str = f.read()
         template = Template(template_str)
-        prompt = template.render(prompt_text=prompt_text, lang=self.languajes[self.outputLang])
+        sources = self.get_sources()
+        prompt = template.render(prompt_text=prompt_text, lang=self.languajes[self.outputLang], sources=sources)
         return prompt
     def setConsult(self,prompt_text):
         prompt_text = self.getPrompt(prompt_text)

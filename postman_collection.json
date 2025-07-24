@@ -17,10 +17,8 @@
           "raw": "{\n  \"prompt\": \"Energía solar\",\n  \"lang\": \"es\"\n}"
         },
         "url": {
-          "raw": "http://localhost:8000/prompt",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "8000",
+          "raw": "{{url}}/prompt",
+          "host": ["{{url}}"],
           "path": ["prompt"]
         },
         "description": "Consulta principal: cachea la respuesta de BitoService y siempre ejecuta scraping en tiempo real."
@@ -38,10 +36,8 @@
           "raw": "{\n  \"prompt\": \"Energía solar\",\n  \"lang\": \"es\"\n}"
         },
         "url": {
-          "raw": "http://localhost:8000/test_prompt",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "8000",
+          "raw": "{{url}}/test_prompt",
+          "host": ["{{url}}"],
           "path": ["test_prompt"]
         },
         "description": "Consulta de prueba: usa ejemplo de respuesta de BitoService y scraping real."
@@ -52,10 +48,8 @@
       "request": {
         "method": "GET",
         "url": {
-          "raw": "http://localhost:8000/prompt-history",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "8000",
+          "raw": "{{url}}/prompt-history",
+          "host": ["{{url}}"],
           "path": ["prompt-history"]
         },
         "description": "Devuelve el historial de prompts cacheados (prompt normalizado, idioma, fecha, topic)."
@@ -66,10 +60,8 @@
       "request": {
         "method": "GET",
         "url": {
-          "raw": "http://localhost:8000/metrics",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "8000",
+          "raw": "{{url}}/metrics",
+          "host": ["{{url}}"],
           "path": ["metrics"]
         },
         "description": "Devuelve las últimas 100 visitas registradas (IP, user agent, SO, navegador, idioma, referrer, ruta, móvil/bot, timestamp)."
@@ -87,15 +79,12 @@
           "raw": "{\n  \"to\": \"destinatario@correo.com\",\n  \"subject\": \"Asunto de prueba\",\n  \"message\": \"Este es un mensaje de prueba.\"\n}"
         },
         "url": {
-          "raw": "http://localhost:8000/send-email",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "8000",
+          "raw": "{{url}}/send-email",
+          "host": ["{{url}}"],
           "path": ["send-email"]
         },
         "description": "Envía un email usando los parámetros dados. SMTP debe estar configurado en variables de entorno."
       }
     }
   ]
-} 
 } 
