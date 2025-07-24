@@ -1,0 +1,28 @@
+comparative: Genera datos numéricos comparativos para un gráfico de líneas sobre {{ prompt_text }}.
+- Usa series que tengan sentido temporal, regional o de categorías relevantes para el tema.
+- El gráfico debe tener al menos 4 columnas: la primera columna es la variable independiente (por ejemplo, año, región, categoría), las siguientes son series numéricas a comparar.
+- Cada fila representa un punto de comparación (por ejemplo, una fecha, región o categoría), y cada columna después de la primera es el valor de una serie para ese punto.
+- Los valores deben ser cercanos y representativos, evitando diferencias extremas.
+- Devuelve un arreglo de arreglos: la primera fila contiene los nombres de las columnas (primero la variable independiente, luego las series), las siguientes filas contienen los valores.
+- Ejemplo:
+[
+  ["Año", "Serie A", "Serie B", "Serie C"],
+  ["2020", 120, 130, 125],
+  ["2021", 140, 135, 138],
+  ["2022", 150, 145, 148]
+]
+- Asegúrate de que cada fila tenga el mismo número de elementos que la fila de encabezados.
+- Devuelve solo JSON, sin texto adicional.
+
+descripcionComparativa: Explica brevemente las tendencias o hechos relevantes que se observan en los datos generados para el gráfico de líneas.
+
+Genera un JSON con la siguiente información:
+topic: {{ prompt_text }}
+resumen: Breve resumen sobre {{ prompt_text }}
+comparative: el arreglo de arreglos generado en la pregunta comparative
+comparative_variable: el nombre de la variable independiente (primera columna)
+comparative_description: la explicación generada en descripcionComparativa
+colors: un arreglo de 3 colores brillantes o contrastantes con fondo oscuro, relacionados con el tema de {{ prompt_text }}
+phrase: una frase representativa, apodo, slogan o dicho relevante sobre {{ prompt_text }}
+
+Devuelve solo el JSON, sin contexto ni explicaciones, y traduce el contenido al idioma {{ lang }}, excepto las claves del JSON que deben estar en inglés y en minúsculas. 

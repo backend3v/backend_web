@@ -1,0 +1,15 @@
+{
+  "topic": "Energía Solar",
+  "resumen": "La energía solar es una fuente renovable que aprovecha la radiación del sol para generar electricidad o calor, siendo clave en la transición energética global.",
+  "comparative": [
+    ["Año", "Producción (GWh)", "Capacidad instalada (MW)", "Crecimiento (%)"],
+    ["2020", 12000, 3500, 8.2],
+    ["2021", 13500, 4100, 12.5],
+    ["2022", 15000, 4700, 13.1],
+    ["2023", 16800, 5300, 14.7]
+  ],
+  "comparative_variable": "Año",
+  "comparative_description": "La gráfica muestra un crecimiento sostenido en la producción y capacidad instalada de energía solar, con incrementos anuales significativos en los últimos cuatro años.",
+  "colors": ["#FFD700", "#FF8C00", "#1E90FF"],
+  "phrase": "Aprovecha el sol, invierte en el futuro"
+} 
