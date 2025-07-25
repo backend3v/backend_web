@@ -4,8 +4,9 @@ import concurrent.futures
 from flask import request, jsonify
 from services.bitoService import BitoService
 from services.prompt_cache_mongo import get_cached_prompt, save_prompt_cache
-from services.metrics import save_visit
+from services.metrics import save_visit, count_prompt_requests
 from services.prompt_normalizer import normalize_prompt
+from datetime import datetime, timedelta
 
 def register_prompt_routes(app, getResponse):
     @app.route('/prompt', methods=['POST'])
@@ -20,11 +21,17 @@ def register_prompt_routes(app, getResponse):
             BS = BitoService(lang)
             normalized_prompt = normalize_prompt(prompt_text)
             cached = get_cached_prompt(normalized_prompt, lang)
-            if cached:
-                bito_result = cached
-            else:
+            if not cached:
+                # Limitar a 3 consultas por IP en 24h
+                ip = request.remote_addr
+                since = datetime.utcnow() - timedelta(hours=24)
+                count = count_prompt_requests(ip, since)
+                if count >= 3:
+                    return jsonify({'error': 'Límite de consultas alcanzado. Intenta más tarde.'}), 429
                 bito_result = BS.setConsult(normalized_prompt)
                 save_prompt_cache(normalized_prompt, lang, bito_result)
+            else:
+                bito_result = cached
             return getResponse(bito_result)
         except subprocess.CalledProcessError as e:
             return getResponse(data={"error": str(e), "output": e.output}, error=True)

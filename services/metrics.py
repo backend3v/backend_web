@@ -26,4 +26,20 @@ def save_visit(request, path):
         "referrer": referrer,
         "path": path
     }
-    collection.insert_one(doc) 
+    collection.insert_one(doc)
+
+# Nueva función para limitar prompts por IP
+
+def count_prompt_requests(ip, since_dt):
+    from pymongo import MongoClient
+    import os
+    MONGO_URI = os.environ.get("MONGO_URI", "mongodb://mongo:27017/")
+    client = MongoClient(MONGO_URI)
+    db = client["prompt_db"]
+    collection = db["metrics"]
+    return collection.count_documents({
+        "ip": ip,
+        "route": "/prompt",
+        "method": "POST",
+        "timestamp": {"$gte": since_dt}
+    }) 
