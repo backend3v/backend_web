@@ -8,6 +8,7 @@ load_dotenv()
 import concurrent.futures
 from routes.prompt_routes import register_prompt_routes
 from routes.email_routes import register_email_routes
+from routes.blog_routes import blog_bp
 import logging
 
 logging.basicConfig(
@@ -50,3 +51,4 @@ class Aplication:
 
         register_prompt_routes(self.app, self.getResponse)
         register_email_routes(self.app, self.getResponse)
+        self.app.register_blueprint(blog_bp)
