@@ -1,25 +1,73 @@
 import os
 from functools import wraps
-from flask import request, jsonify, Blueprint
+from flask import request, jsonify, Blueprint, send_file
+from werkzeug.utils import secure_filename
 from services.blog_models import (
     insert_post, search_posts, get_all_posts,
     insert_category, get_categories,
     update_post, delete_post,
     update_category, delete_category
 )
+from config import Config
+import time
 
 blog_bp = Blueprint('blog', __name__)
 
-ADMIN_API_KEY = os.environ.get('ADMIN_API_KEY', 'changeme')
+# Configuración para subida de archivos
+UPLOAD_FOLDER = '../portafolio3d/src/assets/images/blog'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def require_api_key(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         key = request.headers.get('x-api-key')
-        if not key or key != ADMIN_API_KEY:
+        print(f"[DEBUG] Received API key: {key}")
+        print(f"[DEBUG] Expected API key: {Config.ADMIN_API_KEY}")
+        print(f"[DEBUG] Keys match: {key == Config.ADMIN_API_KEY}")
+        if not key or key != Config.ADMIN_API_KEY:
             return jsonify({'error': 'Unauthorized'}), 401
         return f(*args, **kwargs)
     return decorated
+
+@blog_bp.route('/upload-image', methods=['POST'])
+@require_api_key
+def upload_image():
+    """Sube una imagen y la guarda en assets/images/blog"""
+    if 'image' not in request.files:
+        return jsonify({'error': 'No se envió ningún archivo'}), 400
+    
+    file = request.files['image']
+    if file.filename == '':
+        return jsonify({'error': 'No se seleccionó ningún archivo'}), 400
+    
+    if file and allowed_file(file.filename):
+        # Crear directorio si no existe
+        os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+        
+        # Generar nombre único para el archivo
+        filename = secure_filename(file.filename)
+        name, ext = os.path.splitext(filename)
+        timestamp = int(time.time())
+        unique_filename = f"{name}_{timestamp}{ext}"
+        
+        # Guardar archivo
+        file_path = os.path.join(UPLOAD_FOLDER, unique_filename)
+        file.save(file_path)
+        
+        # Retornar URL relativa para el frontend
+        image_url = f"/src/assets/images/blog/{unique_filename}"
+        
+        return jsonify({
+            'message': 'Imagen subida correctamente',
+            'filename': unique_filename,
+            'url': image_url
+        }), 201
+    
+    return jsonify({'error': 'Tipo de archivo no permitido'}), 400
 
 @blog_bp.route('/posts', methods=['POST'])
 @require_api_key

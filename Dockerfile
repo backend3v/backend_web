@@ -35,7 +35,7 @@ RUN ls
 COPY . .
 
 # Expose the port
-EXPOSE 8000
+EXPOSE 8080
 
 # Command to run the application
 CMD ["python", "__init__.py"]

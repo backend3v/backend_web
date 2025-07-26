@@ -51,4 +51,4 @@ class Aplication:
 
         register_prompt_routes(self.app, self.getResponse)
         register_email_routes(self.app, self.getResponse)
-        self.app.register_blueprint(blog_bp)
+        self.app.register_blueprint(blog_bp, url_prefix='/blog')
