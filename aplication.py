@@ -52,3 +52,17 @@ class Aplication:
         register_prompt_routes(self.app, self.getResponse)
         register_email_routes(self.app, self.getResponse)
         self.app.register_blueprint(blog_bp, url_prefix='/blog')
+
+        # Ruta catch-all para SPA (sirve index.html para rutas no-API)
+        from flask import send_from_directory
+        @self.app.route('/<path:path>')
+        def serve_vue_app(path):
+            # Si la ruta es de API, deja que Flask la maneje
+            if path.startswith('api') or path.startswith('blog'):
+                return "Not found", 404
+            static_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), '../portafolio3d/dist'))
+            # Sirve archivos estáticos si existen
+            if os.path.exists(os.path.join(static_folder, path)):
+                return send_from_directory(static_folder, path)
+            # Si no, sirve index.html para rutas SPA
+            return send_from_directory(static_folder, 'index.html')
