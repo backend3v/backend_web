@@ -9,12 +9,16 @@ def register_email_routes(app, getResponse):
         from email.mime.multipart import MIMEMultipart
 
         data = request.json
-        to_email = data.get('to')
-        subject = data.get('subject')
         message = data.get('message')
 
-        if not to_email or not subject or not message:
-            return getResponse({"error": "Missing 'to', 'subject' or 'message' in request."}, error=True)
+        if not message:
+            return getResponse({"error": "Missing 'message' in request."}, error=True)
+
+        # Obtener destinatario y asunto desde variables de entorno
+        to_email = os.environ.get('EMAIL_TO')
+        subject = os.environ.get('EMAIL_SUBJECT', 'Portafolio')
+        if not to_email:
+            return getResponse({"error": "EMAIL_TO not set in environment variables."}, error=True)
 
         smtp_server = os.environ.get('SMTP_SERVER', 'smtp.gmail.com')
         smtp_port = int(os.environ.get('SMTP_PORT', 587))
