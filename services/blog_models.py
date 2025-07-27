@@ -1,6 +1,7 @@
 from pymongo import MongoClient
 from datetime import datetime
 import os
+from dateutil.parser import parse as parse_date
 
 MONGO_URI = os.environ.get("MONGO_URI", "mongodb://mongo:27017/")
 client = MongoClient(MONGO_URI)
@@ -52,10 +53,10 @@ def get_post_by_title_or_description(q: str):
     ]}
     return list(posts_col.find(filtro, {"_id": 0}))
 
-def update_post(title: str, created_at: str, update_fields: dict):
-    # Busca por título y fecha de creación (ISO string)
+def update_post(title: str, update_fields: dict):
+
     result = posts_col.update_one(
-        {"title": title, "created_at": created_at},
+        {"title": title},
         {"$set": update_fields}
     )
     return result.modified_count > 0

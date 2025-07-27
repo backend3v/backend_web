@@ -83,11 +83,10 @@ def create_post():
 def edit_post():
     data = request.json
     title = data.get('title')
-    created_at = data.get('created_at')
     update_fields = data.get('update', {})
-    if not title or not created_at or not update_fields:
+    if not title or not update_fields:
         return jsonify({'error': 'Faltan datos'}), 400
-    ok = update_post(title, created_at, update_fields)
+    ok = update_post(title, update_fields)
     if not ok:
         return jsonify({'error': 'No se pudo actualizar'}), 404
     return jsonify({'message': 'Post actualizado'})
